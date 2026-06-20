@@ -2,31 +2,79 @@
 
 export type Provider = "groq" | "gemini";
 
-/** What the user enters. */
+/** Raw fields the user enters. */
 export interface WorkfolioInput {
   name: string;
-  title: string; // e.g. "Full-Stack Developer"
-  skills: string; // free text or comma separated
-  experience: string; // free text, one role per line is fine
-  projects: string; // free text, one project per line is fine
+  title: string;
+  email: string;
+  phone: string;
+  location: string;
+  github: string;
+  linkedin: string;
+  website: string;
+  summary: string;
+  skills: string;
+  experience: string;
+  projects: string;
+  education: string;
 }
 
-/** A single generated project blurb. */
-export interface ProjectDescription {
+export interface Contact {
+  email?: string;
+  phone?: string;
+  location?: string;
+  github?: string;
+  linkedin?: string;
+  website?: string;
+}
+
+export interface SkillGroup {
+  category: string;
+  items: string[];
+}
+
+export interface ExperienceItem {
+  role: string;
+  company: string;
+  period: string;
+  location?: string;
+  bullets: string[];
+}
+
+export interface ProjectItem {
   name: string;
-  description: string;
+  subtitle?: string;
+  tech: string[];
+  liveUrl?: string;
+  repoUrl?: string;
+  bullets: string[];
 }
 
-/** What the AI returns — the four artifacts. */
+export interface EducationItem {
+  degree: string;
+  institution: string;
+  period: string;
+}
+
+/**
+ * The single structured profile the AI produces. Both the portfolio site and
+ * the resume are rendered from this, so they always stay consistent.
+ */
+export interface ProfileData {
+  name: string;
+  title: string;
+  tagline: string; // short hero subtitle
+  summary: string; // professional summary paragraph
+  contact: Contact;
+  skills: SkillGroup[];
+  experience: ExperienceItem[];
+  projects: ProjectItem[];
+  education: EducationItem[];
+}
+
 export interface GeneratedWorkfolio {
-  /** Self-contained HTML document for a portfolio site. */
-  portfolioHtml: string;
-  /** Polished, recruiter-ready project write-ups. */
-  projectDescriptions: ProjectDescription[];
-  /** Plain-text / markdown resume. */
-  resume: string;
-  /** LinkedIn "About" summary. */
-  linkedinSummary: string;
+  profile: ProfileData;
+  linkedinSummary: string; // short, first-person
 }
 
 export interface GenerateRequest {

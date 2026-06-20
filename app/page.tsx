@@ -6,32 +6,52 @@ import type {
   Provider,
   WorkfolioInput,
 } from "@/lib/types";
+import PortfolioView from "@/components/PortfolioView";
+import ResumeView from "@/components/ResumeView";
+import { buildPortfolioHtml } from "@/lib/exportHtml";
 
 const EMPTY: WorkfolioInput = {
   name: "",
   title: "",
+  email: "",
+  phone: "",
+  location: "",
+  github: "",
+  linkedin: "",
+  website: "",
+  summary: "",
   skills: "",
   experience: "",
   projects: "",
+  education: "",
 };
 
 const SAMPLE: WorkfolioInput = {
-  name: "Jordan Rivera",
-  title: "Full-Stack Developer",
+  name: "Areesha Rafiq",
+  title: "Full Stack Developer (MERN Stack)",
+  email: "areeshazv@gmail.com",
+  phone: "+92 322 3007388",
+  location: "Karachi, Pakistan",
+  github: "github.com/Areeshhyycode",
+  linkedin: "linkedin.com/in/areesha-rafiq-net",
+  website: "portfolio-delta-ruddy-88.vercel.app",
+  summary:
+    "Full-Stack Developer with hands-on experience building scalable web and mobile applications using the MERN Stack, Next.js, and React Native. Experienced in integrating modern AI technologies, with a strong focus on performance, scalability, and user experience.",
   skills:
-    "TypeScript, React, Next.js, Node.js, PostgreSQL, Python, AWS, Docker, REST APIs",
+    "Frontend: React.js, Next.js 14 (App Router), Redux Toolkit, Context API, React Hooks, Tailwind CSS, Framer Motion, Material UI\nBackend: Node.js, Express.js, REST APIs, JWT, OAuth, NextAuth.js, Mongoose, Socket.io\nDatabases: MongoDB, MongoDB Atlas, PostgreSQL (basic), Firebase Firestore\nMobile: React Native, Expo, React Navigation\nAI / LLM: Groq AI, OpenAI APIs, LLaMA 3.3 70B, Prompt Engineering\nDevOps & Tools: Git, GitHub, GitHub Actions (CI/CD), Vercel, Netlify, Docker (basic), Postman\nTesting: Jest, React Testing Library",
   experience:
-    "Software Engineer at Brightline (2022–present): built customer dashboards used by 10k+ users.\nJunior Developer at Codeworks (2020–2022): maintained internal tooling and CI pipelines.",
+    "Full Stack Developer, Nexal IT Services — Karachi (onsite), 06/2026 – Present. Built scalable web apps with MERN, Next.js, NestJS, Angular and WordPress. Designed RESTful APIs, optimized MongoDB queries, integrated third-party APIs, auth and payments.\n\nJunior MERN Stack Developer, Zero Vertical Labs — Onsite, 11/2025 – Present. Built full-stack web and cross-platform mobile apps with React, Next.js, React Native, Node and MongoDB. Integrated Firebase and OpenAI-powered features; managed state with Redux Toolkit.\n\nMERN Stack Developer Intern, Lokhandwala Web Solutions — Remote, 08/2025 – 10/2025. Built 6+ REST endpoints with JWT auth, improved React Native performance with lazy loading, wrote Jest/RTL tests.",
   projects:
-    "TaskFlow — a real-time team task manager built with Next.js and WebSockets.\nLeafLedger — a personal finance tracker with charting and CSV import.\nDevPort — an open-source portfolio template (1.2k GitHub stars).",
+    "ZVTalent — AI-Powered Hiring Platform. Next.js, MongoDB, Groq AI (LLaMA 3.3 70B), NextAuth.js. Live: zv-talent.vercel.app. Reads resumes, scores candidates vs job descriptions, generates tailored interview questions, and shows ranked candidates on an HR dashboard.\n\nJobGenie AI — AI-Powered Job Application Tracker. Next.js 14, React 18, MongoDB, Groq AI, NextAuth.js, Tailwind. Live: job-genie-ai-ebon.vercel.app. Generates tailored cover letters and interview questions, AI match score, real-time analytics dashboard with Recharts.\n\nDaily Vocab — Automated Vocabulary Builder. Next.js, Node.js, Groq AI, GitHub Actions, Vercel. Live: daily-qoutes-ai.vercel.app. Daily word generator with a fully automated CI/CD cron pipeline that auto-commits and deploys.",
+  education:
+    "Diploma in Advanced Software Development, Aptech Garden, 2023 – 2025\nIntermediate (ICS), Ziauddin College, In Progress",
 };
 
-type Tab = "portfolio" | "projects" | "resume" | "linkedin";
+type Tab = "portfolio" | "resume" | "linkedin";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "portfolio", label: "Portfolio Site" },
-  { id: "projects", label: "Project Descriptions" },
-  { id: "resume", label: "Resume" },
+  { id: "resume", label: "Resume (PDF)" },
   { id: "linkedin", label: "LinkedIn Summary" },
 ];
 
@@ -79,97 +99,103 @@ export default function Home() {
           AI <span className="brand">Workfolio</span> Builder
         </h1>
         <p>
-          Enter your skills, experience, and projects — get a portfolio site,
-          polished project descriptions, a resume, and a LinkedIn summary.
+          Enter your details — get a polished portfolio site, an ATS-friendly
+          resume (download as PDF), and a short LinkedIn summary.
         </p>
       </div>
 
       <div className="grid">
         {/* ---------- Input panel ---------- */}
-        <div className="panel">
+        <div className="panel form-panel">
           <div className="row">
             <div>
               <label htmlFor="name">Name</label>
-              <input
-                id="name"
-                type="text"
-                placeholder="Jordan Rivera"
-                value={input.name}
-                onChange={(e) => update("name", e.target.value)}
-              />
+              <input id="name" type="text" value={input.name}
+                onChange={(e) => update("name", e.target.value)} placeholder="Areesha Rafiq" />
             </div>
             <div>
               <label htmlFor="title">Title</label>
-              <input
-                id="title"
-                type="text"
-                placeholder="Full-Stack Developer"
-                value={input.title}
-                onChange={(e) => update("title", e.target.value)}
-              />
+              <input id="title" type="text" value={input.title}
+                onChange={(e) => update("title", e.target.value)} placeholder="Full Stack Developer" />
             </div>
           </div>
 
+          <div className="row">
+            <div>
+              <label htmlFor="email">Email</label>
+              <input id="email" type="text" value={input.email}
+                onChange={(e) => update("email", e.target.value)} placeholder="you@email.com" />
+            </div>
+            <div>
+              <label htmlFor="phone">Phone</label>
+              <input id="phone" type="text" value={input.phone}
+                onChange={(e) => update("phone", e.target.value)} placeholder="+92 …" />
+            </div>
+          </div>
+
+          <div className="row">
+            <div>
+              <label htmlFor="location">Location</label>
+              <input id="location" type="text" value={input.location}
+                onChange={(e) => update("location", e.target.value)} placeholder="Karachi, Pakistan" />
+            </div>
+            <div>
+              <label htmlFor="website">Website / Portfolio</label>
+              <input id="website" type="text" value={input.website}
+                onChange={(e) => update("website", e.target.value)} placeholder="yoursite.vercel.app" />
+            </div>
+          </div>
+
+          <div className="row">
+            <div>
+              <label htmlFor="github">GitHub</label>
+              <input id="github" type="text" value={input.github}
+                onChange={(e) => update("github", e.target.value)} placeholder="github.com/you" />
+            </div>
+            <div>
+              <label htmlFor="linkedin">LinkedIn</label>
+              <input id="linkedin" type="text" value={input.linkedin}
+                onChange={(e) => update("linkedin", e.target.value)} placeholder="linkedin.com/in/you" />
+            </div>
+          </div>
+
+          <label htmlFor="summary">Professional Summary</label>
+          <textarea id="summary" rows={3} value={input.summary}
+            onChange={(e) => update("summary", e.target.value)}
+            placeholder="A few lines about you (or leave blank — AI will write one)." />
+
           <label htmlFor="skills">Skills</label>
-          <textarea
-            id="skills"
-            rows={3}
-            placeholder="TypeScript, React, Node.js, PostgreSQL…"
-            value={input.skills}
+          <textarea id="skills" rows={4} value={input.skills}
             onChange={(e) => update("skills", e.target.value)}
-          />
+            placeholder="Group like 'Frontend: React, Next.js' — one group per line." />
 
           <label htmlFor="experience">Experience</label>
-          <textarea
-            id="experience"
-            rows={4}
-            placeholder="One role per line: title, company, what you did…"
-            value={input.experience}
+          <textarea id="experience" rows={6} value={input.experience}
             onChange={(e) => update("experience", e.target.value)}
-          />
+            placeholder="One role per block: Title, Company — Location, Dates. What you did." />
 
           <label htmlFor="projects">Projects</label>
-          <textarea
-            id="projects"
-            rows={4}
-            placeholder="One project per line: name — what it does…"
-            value={input.projects}
+          <textarea id="projects" rows={6} value={input.projects}
             onChange={(e) => update("projects", e.target.value)}
-          />
+            placeholder="One per block: Name — description. Tech. Live: url. GitHub: url." />
+
+          <label htmlFor="education">Education</label>
+          <textarea id="education" rows={2} value={input.education}
+            onChange={(e) => update("education", e.target.value)}
+            placeholder="Degree, Institution, Years — one per line." />
 
           <label htmlFor="provider">AI Provider</label>
-          <select
-            id="provider"
-            value={provider}
-            onChange={(e) => setProvider(e.target.value as Provider)}
-          >
+          <select id="provider" value={provider}
+            onChange={(e) => setProvider(e.target.value as Provider)}>
             <option value="groq">Groq (Llama 3.3 70B)</option>
             <option value="gemini">Google Gemini</option>
           </select>
-          <div className="hint">
-            Set the matching API key in <code>.env.local</code>.
-          </div>
 
-          <button
-            className="btn"
-            onClick={generate}
-            disabled={loading || !filled}
-          >
-            {loading ? (
-              <>
-                <span className="spinner" /> Generating…
-              </>
-            ) : (
-              "Generate Workfolio"
-            )}
+          <button className="btn" onClick={generate} disabled={loading || !filled}>
+            {loading ? (<><span className="spinner" /> Generating…</>) : "Generate Workfolio"}
           </button>
-
-          <button
-            className="btn-ghost"
-            style={{ marginTop: 10 }}
-            onClick={() => setInput(SAMPLE)}
-            disabled={loading}
-          >
+          <button className="btn-ghost" style={{ marginTop: 10 }}
+            onClick={() => setInput(SAMPLE)} disabled={loading}>
             Fill with sample data
           </button>
 
@@ -182,10 +208,10 @@ export default function Home() {
             <div className="empty">
               {loading
                 ? "Generating your workfolio — this can take 10–30 seconds…"
-                : "Your generated assets will appear here."}
+                : "Your portfolio, resume, and LinkedIn summary will appear here."}
             </div>
           ) : (
-            <Results result={result} tab={tab} setTab={setTab} name={input.name} />
+            <Results result={result} tab={tab} setTab={setTab} />
           )}
         </div>
       </div>
@@ -197,24 +223,17 @@ function Results({
   result,
   tab,
   setTab,
-  name,
 }: {
   result: GeneratedWorkfolio;
   tab: Tab;
   setTab: (t: Tab) => void;
-  name: string;
 }) {
-  const slug = (name || "workfolio").toLowerCase().replace(/[^a-z0-9]+/g, "-");
-
   return (
     <div>
       <div className="tabs">
         {TABS.map((t) => (
-          <button
-            key={t.id}
-            className={`tab ${tab === t.id ? "active" : ""}`}
-            onClick={() => setTab(t.id)}
-          >
+          <button key={t.id} className={`tab ${tab === t.id ? "active" : ""}`}
+            onClick={() => setTab(t.id)}>
             {t.label}
           </button>
         ))}
@@ -224,63 +243,49 @@ function Results({
         <div>
           <div className="result-head">
             <strong>Live preview</strong>
-            <div className="actions">
-              <CopyButton text={result.portfolioHtml} />
-              <DownloadButton
-                text={result.portfolioHtml}
-                filename={`${slug}-portfolio.html`}
-                label="Download .html"
-                type="text/html"
-              />
-            </div>
+            <button
+              className="btn-ghost"
+              onClick={() => {
+                const slug =
+                  (result.profile.name || "portfolio")
+                    .toLowerCase()
+                    .replace(/[^a-z0-9]+/g, "-")
+                    .replace(/^-|-$/g, "") || "portfolio";
+                downloadFile(
+                  buildPortfolioHtml(result.profile),
+                  `${slug}-portfolio.html`,
+                  "text/html"
+                );
+              }}
+            >
+              ⬇ Download Site (.html)
+            </button>
           </div>
-          <iframe
-            className="preview-frame"
-            title="Portfolio preview"
-            srcDoc={result.portfolioHtml}
-            sandbox="allow-same-origin"
-          />
-        </div>
-      )}
-
-      {tab === "projects" && (
-        <div>
-          <div className="result-head">
-            <strong>Project descriptions</strong>
-            <CopyButton
-              text={result.projectDescriptions
-                .map((p) => `${p.name}\n${p.description}`)
-                .join("\n\n")}
-            />
+          <p className="hint" style={{ marginBottom: 12 }}>
+            One self-contained file — open it in any browser or drop it on
+            Vercel / Netlify / GitHub Pages to go live.
+          </p>
+          <div className="preview-shell">
+            <PortfolioView data={result.profile} />
           </div>
-          {result.projectDescriptions.length === 0 ? (
-            <div className="empty">No projects generated.</div>
-          ) : (
-            result.projectDescriptions.map((p, i) => (
-              <div className="project-card" key={i}>
-                <h3>{p.name}</h3>
-                <p>{p.description}</p>
-              </div>
-            ))
-          )}
         </div>
       )}
 
       {tab === "resume" && (
         <div>
           <div className="result-head">
-            <strong>Resume (Markdown)</strong>
-            <div className="actions">
-              <CopyButton text={result.resume} />
-              <DownloadButton
-                text={result.resume}
-                filename={`${slug}-resume.md`}
-                label="Download .md"
-                type="text/markdown"
-              />
-            </div>
+            <strong>ATS-friendly resume</strong>
+            <button className="btn-ghost" onClick={() => window.print()}>
+              ⬇ Download PDF
+            </button>
           </div>
-          <pre className="output">{result.resume}</pre>
+          <p className="hint" style={{ marginBottom: 12 }}>
+            Click “Download PDF”, then choose <em>Save as PDF</em> as the printer.
+            The text stays selectable, so ATS systems read it correctly.
+          </p>
+          <div className="preview-shell">
+            <ResumeView data={result.profile} />
+          </div>
         </div>
       )}
 
@@ -295,6 +300,16 @@ function Results({
       )}
     </div>
   );
+}
+
+function downloadFile(text: string, filename: string, type: string) {
+  const blob = new Blob([text], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 function CopyButton({ text }: { text: string }) {
@@ -313,33 +328,6 @@ function CopyButton({ text }: { text: string }) {
       }}
     >
       {copied ? "Copied!" : "Copy"}
-    </button>
-  );
-}
-
-function DownloadButton({
-  text,
-  filename,
-  label,
-  type,
-}: {
-  text: string;
-  filename: string;
-  label: string;
-  type: string;
-}) {
-  function download() {
-    const blob = new Blob([text], { type });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
-  }
-  return (
-    <button className="btn-ghost" onClick={download}>
-      {label}
     </button>
   );
 }
