@@ -27,24 +27,24 @@ const EMPTY: WorkfolioInput = {
 };
 
 const SAMPLE: WorkfolioInput = {
-  name: "Areesha Rafiq",
+  name: "Jordan Carter",
   title: "Full Stack Developer (MERN Stack)",
-  email: "areeshazv@gmail.com",
-  phone: "+92 322 3007388",
-  location: "Karachi, Pakistan",
-  github: "github.com/Areeshhyycode",
-  linkedin: "linkedin.com/in/areesha-rafiq-net",
-  website: "portfolio-delta-ruddy-88.vercel.app",
+  email: "jordan.carter@example.com",
+  phone: "+1 555 0100",
+  location: "Austin, USA",
+  github: "github.com/jordancarter-dev",
+  linkedin: "linkedin.com/in/jordan-carter-dev",
+  website: "jordan-carter.example.com",
   summary:
     "Full-Stack Developer with hands-on experience building scalable web and mobile applications using the MERN Stack, Next.js, and React Native. Experienced in integrating modern AI technologies, with a strong focus on performance, scalability, and user experience.",
   skills:
     "Frontend: React.js, Next.js 14 (App Router), Redux Toolkit, Context API, React Hooks, Tailwind CSS, Framer Motion, Material UI\nBackend: Node.js, Express.js, REST APIs, JWT, OAuth, NextAuth.js, Mongoose, Socket.io\nDatabases: MongoDB, MongoDB Atlas, PostgreSQL (basic), Firebase Firestore\nMobile: React Native, Expo, React Navigation\nAI / LLM: Groq AI, OpenAI APIs, LLaMA 3.3 70B, Prompt Engineering\nDevOps & Tools: Git, GitHub, GitHub Actions (CI/CD), Vercel, Netlify, Docker (basic), Postman\nTesting: Jest, React Testing Library",
   experience:
-    "Full Stack Developer, Nexal IT Services — Karachi (onsite), 06/2026 – Present. Built scalable web apps with MERN, Next.js, NestJS, Angular and WordPress. Designed RESTful APIs, optimized MongoDB queries, integrated third-party APIs, auth and payments.\n\nJunior MERN Stack Developer, Zero Vertical Labs — Onsite, 11/2025 – Present. Built full-stack web and cross-platform mobile apps with React, Next.js, React Native, Node and MongoDB. Integrated Firebase and OpenAI-powered features; managed state with Redux Toolkit.\n\nMERN Stack Developer Intern, Lokhandwala Web Solutions — Remote, 08/2025 – 10/2025. Built 6+ REST endpoints with JWT auth, improved React Native performance with lazy loading, wrote Jest/RTL tests.",
+    "Full Stack Developer, Brightwave Technologies — Austin (onsite), 06/2024 – Present. Built scalable web apps with MERN, Next.js, NestJS, Angular and WordPress. Designed RESTful APIs, optimized MongoDB queries, integrated third-party APIs, auth and payments.\n\nJunior MERN Stack Developer, Summit Digital Labs — Onsite, 11/2023 – 05/2024. Built full-stack web and cross-platform mobile apps with React, Next.js, React Native, Node and MongoDB. Integrated Firebase and OpenAI-powered features; managed state with Redux Toolkit.\n\nMERN Stack Developer Intern, Cloudpeak Solutions — Remote, 08/2023 – 10/2023. Built 6+ REST endpoints with JWT auth, improved React Native performance with lazy loading, wrote Jest/RTL tests.",
   projects:
-    "ZVTalent — AI-Powered Hiring Platform. Next.js, MongoDB, Groq AI (LLaMA 3.3 70B), NextAuth.js. Live: zv-talent.vercel.app. Reads resumes, scores candidates vs job descriptions, generates tailored interview questions, and shows ranked candidates on an HR dashboard.\n\nJobGenie AI — AI-Powered Job Application Tracker. Next.js 14, React 18, MongoDB, Groq AI, NextAuth.js, Tailwind. Live: job-genie-ai-ebon.vercel.app. Generates tailored cover letters and interview questions, AI match score, real-time analytics dashboard with Recharts.\n\nDaily Vocab — Automated Vocabulary Builder. Next.js, Node.js, Groq AI, GitHub Actions, Vercel. Live: daily-qoutes-ai.vercel.app. Daily word generator with a fully automated CI/CD cron pipeline that auto-commits and deploys.",
+    "TalentMatch — AI-Powered Hiring Platform. Next.js, MongoDB, Groq AI (LLaMA 3.3 70B), NextAuth.js. Live: talentmatch.example.com. Reads resumes, scores candidates vs job descriptions, generates tailored interview questions, and shows ranked candidates on an HR dashboard.\n\nApplyGenie — AI-Powered Job Application Tracker. Next.js 14, React 18, MongoDB, Groq AI, NextAuth.js, Tailwind. Live: applygenie.example.com. Generates tailored cover letters and interview questions, AI match score, real-time analytics dashboard with Recharts.\n\nWordSprout — Automated Vocabulary Builder. Next.js, Node.js, Groq AI, GitHub Actions, Vercel. Live: wordsprout.example.com. Daily word generator with a fully automated CI/CD cron pipeline that auto-commits and deploys.",
   education:
-    "Diploma in Advanced Software Development, Aptech Garden, 2023 – 2025\nIntermediate (ICS), Ziauddin College, In Progress",
+    "Diploma in Advanced Software Development, Riverside Tech Institute, 2021 – 2023\nIntermediate (Computer Science), Lakeside College, 2019 – 2021",
 };
 
 type Tab = "portfolio" | "resume" | "linkedin";
@@ -111,7 +111,7 @@ export default function Home() {
             <div>
               <label htmlFor="name">Name</label>
               <input id="name" type="text" value={input.name}
-                onChange={(e) => update("name", e.target.value)} placeholder="Areesha Rafiq" />
+                onChange={(e) => update("name", e.target.value)} placeholder="Jordan Carter" />
             </div>
             <div>
               <label htmlFor="title">Title</label>
@@ -129,7 +129,7 @@ export default function Home() {
             <div>
               <label htmlFor="phone">Phone</label>
               <input id="phone" type="text" value={input.phone}
-                onChange={(e) => update("phone", e.target.value)} placeholder="+92 …" />
+                onChange={(e) => update("phone", e.target.value)} placeholder="+1 …" />
             </div>
           </div>
 
@@ -137,7 +137,7 @@ export default function Home() {
             <div>
               <label htmlFor="location">Location</label>
               <input id="location" type="text" value={input.location}
-                onChange={(e) => update("location", e.target.value)} placeholder="Karachi, Pakistan" />
+                onChange={(e) => update("location", e.target.value)} placeholder="Austin, USA" />
             </div>
             <div>
               <label htmlFor="website">Website / Portfolio</label>
